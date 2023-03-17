@@ -31,7 +31,7 @@ export default function Form() {
 
               <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                    Pick the font and the color of your card's title and date.
+                    {`Pick the font and the color of your card's title and date.`}
                 </label>
                 <div className="mt-2 flex justify-between">
                     <DropDown title = "Text Font"/>
