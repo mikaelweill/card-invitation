@@ -6,8 +6,8 @@ export default function Form() {
         <div className="space-y-8 divide-y divide-gray-200">
           <div>  
             <div>
-                <h3 className="text-base font-semibold leading-6 text-gray-900">Text of the card</h3>
-                <p className="mt-1 text-sm text-gray-500">Here is where you can play around with the text, font and color of your title and date.</p>
+                <h3 className="text-base font-semibold leading-6 text-gray-900">Create the card</h3>
+                <p className="mt-1 text-sm text-gray-500">This is the playground section. You can play around with the text, the font, the color of your title and date, as well as upload picture or images.</p>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               <div className="sm:col-span-4">
@@ -28,6 +28,21 @@ export default function Form() {
                 </div>
 
               </div>
+
+              <div className="sm:col-span-4">
+                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                   Change the date of your event.
+                </label>
+                <div className="mt-2 flex">
+                  <input
+                    type="date"
+                    className="block w-1/2 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
+                  />
+                </div>
+
+              </div>
+  
+              
 
               <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
@@ -79,8 +94,8 @@ export default function Form() {
   
           <div className="pt-8">
             <div>
-              <h3 className="text-base font-semibold leading-6 text-gray-900">Personal Information</h3>
-              <p className="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
+              <h3 className="text-base font-semibold leading-6 text-gray-900">Share the card</h3>
+              <p className="mt-1 text-sm text-gray-500">This is the section where you can download the card locally or share it with friends and family via e-mail.</p>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               <div className="sm:col-span-3">
