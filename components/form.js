@@ -1,6 +1,23 @@
 import DropDown from '@/components/dropdown'
+import Menu from '@/components/menu'
+import { useState } from "react"
 
-export default function Form() {
+export default function Form(props) {
+
+  const [message, setMessage] = useState("")
+  const [colorText, setColorText] = useState(props.colorTextFinal)
+
+
+  const handleChange = event => {
+    setMessage(event.target.value)
+  }
+
+  function closeColorPicker(event) {
+    props.setColorTextFinal(event.target.value)
+    setColorText(event.target.value)
+  }
+
+
     return (
       <form className="space-y-8 divide-y divide-gray-200">
         <div className="space-y-8 divide-y divide-gray-200">
@@ -19,10 +36,13 @@ export default function Form() {
                     type="text"
                     placeholder= "Type title here"
                     className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
+                    onChange={handleChange}
+                    value={message}
                   />
                     <button
                         type="button"
                         className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={() => props.submitClick(message)}
                     >
                         Visualize
                     </button>
@@ -50,11 +70,31 @@ export default function Form() {
                     {`Pick the font and the color of your card's title and date`}
                 </label>
                 <div className="mt-2 flex justify-between">
-                    <DropDown title = "Text Font"/>
-                    <DropDown title = "Text Color"/>
+                    <Menu 
+                      title = "Text Font"
+                      font = {props.font}
+                      loadNewFont={props.loadNewFont}
+                      googleFont = {props.googleFont}
+                      />
+                    <input
+                    type="color"
+                    value={props.colorText}
+                    style={{
+                      backgroundColor: colorText
+                    }}
+                    onChange={(event) => setColorText(event.target.value)}
+                    onBlur={(event) => closeColorPicker(event)}
+                    className="block w-1/3 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
+                  />
                 </div>
 
               </div>
+
+
+
+
+
+
 
               <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
@@ -63,6 +103,10 @@ export default function Form() {
                 <div className="mt-2 flex">
                   <input
                     type="color"
+                    style={{
+                      backgroundColor: props.colorBackgroundFinal
+                    }}
+                    onBlur={(event) => props.setColorBackgroundFinal(event.target.value)} 
                     className="block w-1/3 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
                   />
                 </div>

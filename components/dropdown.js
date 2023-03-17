@@ -7,6 +7,29 @@ function classNames(...classes) {
 }
 
 export default function DropDown(props) {
+
+  const googleFonts = (props.googleFont.items.map(font => {
+    return (<Menu.Item
+      onChange={(event) => props.loadNewFont(event)}
+      // key={`${font.family}`}
+      // value={font.family}
+    >
+
+{({ active }) => (
+                <p
+                  href="#"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                  {font.family}
+                </p>
+              )}
+    </Menu.Item>)
+  }))
+
+
   return (
     <Menu as="div" className="relative inline-block text-left w-1/3">
       <div>
@@ -28,22 +51,12 @@ export default function DropDown(props) {
         <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-4 py-3">
             <p className="text-sm">Current font is</p>
-            <p className="truncate text-sm font-medium text-gray-900">add font name here</p>
+            <p className="truncate text-sm font-medium text-gray-900">{props.font.family}</p>
           </div>
-          <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Account settings
-                </a>
-              )}
-            </Menu.Item>
+          <div className="overflow-scroll">
+
+              {googleFonts}
+
           </div>
         </Menu.Items>
       </Transition>

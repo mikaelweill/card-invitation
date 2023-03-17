@@ -1,11 +1,50 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { getData } from './api/googleFont'
+import { useState } from "react"
 import Form from '@/components/form'
 import Header from "@/components/header"
+import Card from '@/components/card'
 
 
 
-export default function Home() {
+
+export async function getServerSideProps() {
+  const jsonData = await getData()
+  return {
+    props: { googleFont: jsonData }
+  }
+
+}
+
+export default function Home(props) {
+
+  const [msgSubmit, setMsgSubmit] = useState("Example")
+  const [font, setFont] = useState({ url: "", family: "Arial" })
+  const [imgPath, setImgPath] = useState("/question_mark.png")
+  const [colorTextFinal, setColorTextFinal] = useState("#000000")
+  const [colorBackgroundFinal, setColorBackgroundFinal] = useState("#FFF")
+  const [saveDate, setSaveDate] = useState(new Date().toISOString().split('T')[0])
+
+
+
+
+  const submitClick = (message) => {
+    setMsgSubmit(message)
+  }
+
+  const loadNewFont = event => {
+    setFont({ url: `https://fonts.googleapis.com/css?family=${event.currentTarget.value}`, family: event.currentTarget.value })
+  }
+
+  function onUpload(event) {
+    const file = event.target.files[0]
+    setImgPath(URL.createObjectURL(file))
+  }
+
+
+
+
   return (
     <>
       <Head>
@@ -14,10 +53,34 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="ml-5">
+      <main className="ml-5 mb-5 mt-5">
         <Header />
-        <div className = "w-2/5">
-          <Form />
+        <div className = "flex justify-between">
+          <div className = "w-2/5">
+            <Form 
+                      msgSubmit={msgSubmit}
+                      googleFont={props.googleFont}
+                      font={font}
+                      submitClick={submitClick}
+                      loadNewFont={loadNewFont}
+                      setColorTextFinal={setColorTextFinal}
+                      colorTextFinal={colorTextFinal}
+                      colorBackgroundFinal={colorBackgroundFinal}
+                      setColorBackgroundFinal={setColorBackgroundFinal}
+                      imgPath={imgPath}
+                      onUpload={onUpload}
+                      saveDate={saveDate}
+                      setSaveDate={setSaveDate}
+            />
+          </div>
+          <div className = "w-2/5">
+            <Card 
+              font = {font}
+              msgSubmit = {msgSubmit}
+              imgPath = {imgPath}
+              saveDate = {saveDate}
+            />
+          </div>
         </div>
       </main>
     </>
