@@ -8,6 +8,7 @@ export default function Form(props) {
 
   const [message, setMessage] = useState("")
   const [colorText, setColorText] = useState(props.colorTextFinal)
+  const [email, setEmail] = useState("")
 
 
   const handleChange = event => {
@@ -53,9 +54,7 @@ export default function Form(props) {
 
 
   const exportAsImage = async (element, imageFileName) => {
-    console.log(element)
     const downloadImage = (blob, fileName) => {
-      console.log(1)
       const fakeLink = window.document.createElement("a")
       fakeLink.style = "display:none;"
       fakeLink.download = fileName
@@ -271,11 +270,13 @@ export default function Form(props) {
                     type="email"
                     autoComplete="email"
                     placeholder= "example@gmail.com"
+                    onChange={(event) => setEmail(event.target.value)}
+                    value = {email}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
                   />
                     <button
                         type="button"
-                        onClick={(event) => sendEmail(event, exportRef.current)}
+                        onClick={(event) => sendEmail(event, props.exportRef.current)}
                         className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Send
