@@ -14,7 +14,7 @@ export default function Card(props) {
         ref={exportRef}
       >
         <link rel="stylesheet" type="text/css" href={props.font.url} />
-        <p
+        <p className = "text-7xl text-center"
           style={{
             fontFamily: props.font.family,
             color: props.colorTextFinal,
@@ -25,8 +25,11 @@ export default function Card(props) {
         </p>
         <img
           src={props.imgPath}
-          alt="your image" />
+          alt="your image" 
+          className = "w-full"
+        />
         <p 
+            className = "text-7xl text-center"
           style={{
             fontFamily: props.font.family,
             color: props.colorTextFinal,

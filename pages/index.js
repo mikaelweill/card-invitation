@@ -22,8 +22,8 @@ export default function Home(props) {
   const [msgSubmit, setMsgSubmit] = useState("Example")
   const [font, setFont] = useState({ url: "", family: "Arial" })
   const [imgPath, setImgPath] = useState("/question_mark.png")
-  const [colorTextFinal, setColorTextFinal] = useState("#000000")
-  const [colorBackgroundFinal, setColorBackgroundFinal] = useState("#FFF")
+  const [colorTextFinal, setColorTextFinal] = useState("#FFF")
+  const [colorBackgroundFinal, setColorBackgroundFinal] = useState("#000000")
   const [saveDate, setSaveDate] = useState(new Date().toISOString().split('T')[0])
 
 
@@ -42,6 +42,13 @@ export default function Home(props) {
     setImgPath(URL.createObjectURL(file))
   }
 
+function onDrop(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    const file = event.dataTransfer.files[0]
+    setImgPath(URL.createObjectURL(file))
+  }
+
 
 
 
@@ -53,7 +60,7 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="ml-5 mb-5 mt-5">
+      <main className="m-5">
         <Header />
         <div className = "flex justify-between">
           <div className = "w-2/5">
@@ -69,6 +76,7 @@ export default function Home(props) {
                       setColorBackgroundFinal={setColorBackgroundFinal}
                       imgPath={imgPath}
                       onUpload={onUpload}
+                      onDrop={onDrop}
                       saveDate={saveDate}
                       setSaveDate={setSaveDate}
             />
@@ -79,6 +87,8 @@ export default function Home(props) {
               msgSubmit = {msgSubmit}
               imgPath = {imgPath}
               saveDate = {saveDate}
+              colorBackgroundFinal = {colorBackgroundFinal}
+              colorTextFinal = {colorTextFinal}
             />
           </div>
         </div>

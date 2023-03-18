@@ -57,6 +57,8 @@ export default function Form(props) {
                 <div className="mt-2 flex">
                   <input
                     type="date"
+                    value={props.saveDate}
+                    onChange={(event) => props.setSaveDate(event.target.value)}
                     className="block w-1/2 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
                   />
                 </div>
@@ -117,7 +119,18 @@ export default function Form(props) {
                 <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
                   Select a cover photo for the invitation card
                 </label>
-                <div className="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                <div className="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
+                                      onDragOver = {event => {
+                                        event.stopPropagation()
+                                        event.preventDefault()
+                                      }}
+                                      onDragEnter = {event => {
+                                        // event.stopPropagation()
+                                        // event.preventDefault()
+                                        event.dataTransfer.dropEffect = "move";
+                                      }}
+                                      onDrop={event => props.onDrop(event)}
+                >
                   <div className="space-y-1 text-center">
                     <svg
                       className="mx-auto h-12 w-12 text-gray-400"
@@ -139,7 +152,23 @@ export default function Form(props) {
                         className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
                         <span>Upload a file</span>
-                        <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                        <input 
+                          id="file-upload" 
+                          name="file-upload" 
+                          type="file" 
+                          onChange={event => props.onUpload(event)}
+                          // onDragOver = {event => {
+                          //   // event.stopPropagation()
+                          //   event.preventDefault()
+                          // }}
+                          // onDragEnter = {event => {
+                          //   // event.stopPropagation()
+                          //   event.preventDefault()
+                          // }}
+                          // onDrop={event => props.onUpload(event)}
+                          accept=".jpeg,.png"
+                          className="sr-only" 
+                        />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
