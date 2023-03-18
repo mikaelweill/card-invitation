@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { getData } from './api/googleFont'
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Form from '@/components/form'
 import Header from "@/components/header"
 import Card from '@/components/card'
@@ -27,6 +27,7 @@ export default function Home(props) {
   const [saveDate, setSaveDate] = useState(new Date().toISOString().split('T')[0])
 
 
+  const exportRef = useRef();
 
 
   const submitClick = (message) => {
@@ -79,6 +80,7 @@ function onDrop(event) {
                       onDrop={onDrop}
                       saveDate={saveDate}
                       setSaveDate={setSaveDate}
+                      exportRef={exportRef}
             />
           </div>
           <div className = "w-2/5">
@@ -89,6 +91,7 @@ function onDrop(event) {
               saveDate = {saveDate}
               colorBackgroundFinal = {colorBackgroundFinal}
               colorTextFinal = {colorTextFinal}
+              exportRef={exportRef}
             />
           </div>
         </div>

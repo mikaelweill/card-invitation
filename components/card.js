@@ -1,17 +1,10 @@
-import { useRef, useState } from 'react';
-
-
-
 export default function Card(props) {
 
-
-    const exportRef = useRef();
 
 
     return (
       <div
-        className="container-card"
-        ref={exportRef}
+        ref={props.exportRef}
       >
         <link rel="stylesheet" type="text/css" href={props.font.url} />
         <p className = "text-7xl text-center"

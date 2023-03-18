@@ -14,11 +14,11 @@ export default function Menu(props) {
       }))
 
     return (
-      <div className="relative inline-block text-left w-1/3 ">
+      <div className="relative inline-block text-left w-2/5">
    
         <select
-          id="location"
-          name="location"
+          id="fonts"
+          name="fonts"
           className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
           onChange={(event) => props.loadNewFont(event)}
         >

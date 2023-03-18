@@ -1,7 +1,10 @@
 import Menu from '@/components/menu'
-import { useState } from "react"
+import html2canvas from "html2canvas";
+import { useState } from 'react';
+
 
 export default function Form(props) {
+
 
   const [message, setMessage] = useState("")
   const [colorText, setColorText] = useState(props.colorTextFinal)
@@ -14,6 +17,60 @@ export default function Form(props) {
   function closeColorPicker(event) {
     props.setColorTextFinal(event.target.value)
     setColorText(event.target.value)
+  }
+
+
+
+
+  const sendEmail = async (event, ref) => {
+    const canvas = await html2canvas(ref)
+    const image = canvas.toDataURL()
+    const imageFilt = image.split(',')[1];
+    event.preventDefault()
+    console.log('Sending')
+    let data = {
+      email,
+      message,
+      imageFilt
+    }
+
+    fetch(`/api/nodeMail`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((res) => {
+        console.log(res.status)
+        if (res.status === 200) {
+          console.log(data)
+          setEmail('')
+        }
+      })
+  }
+
+
+  const exportAsImage = async (element, imageFileName) => {
+    console.log(element)
+    const downloadImage = (blob, fileName) => {
+      console.log(1)
+      const fakeLink = window.document.createElement("a")
+      fakeLink.style = "display:none;"
+      fakeLink.download = fileName
+      fakeLink.href = blob
+      document.body.appendChild(fakeLink)
+      fakeLink.click()
+      document.body.removeChild(fakeLink)
+      fakeLink.remove()
+    }
+
+    const canvas = await html2canvas(element)
+    const image = canvas.toDataURL("image/png", 1.0)
+
+    downloadImage(image, imageFileName)
+
   }
 
 
@@ -70,7 +127,7 @@ export default function Form(props) {
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                     {`Pick the font and the color of your card's title and date`}
                 </label>
-                <div className="mt-2 flex justify-between">
+                <div className="mt-2 flex justify-between items-center">
                     <Menu 
                       title = "Text Font"
                       font = {props.font}
@@ -85,7 +142,7 @@ export default function Form(props) {
                     }}
                     onChange={(event) => setColorText(event.target.value)}
                     onBlur={(event) => closeColorPicker(event)}
-                    className="block w-1/3 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
+                    className="relative inline-block w-2/5 rounded-md"
                   />
                 </div>
 
@@ -93,13 +150,9 @@ export default function Form(props) {
 
 
 
-
-
-
-
               <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                   {`Change the background color of your card's title and date`}
+                   {`Change the background color`}
                 </label>
                 <div className="mt-2 flex">
                   <input
@@ -108,7 +161,7 @@ export default function Form(props) {
                       backgroundColor: props.colorBackgroundFinal
                     }}
                     onBlur={(event) => props.setColorBackgroundFinal(event.target.value)} 
-                    className="block w-1/3 min-w-0  rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-6"
+                    className="relative inline-block w-2/5 rounded-md"
                   />
                 </div>
 
@@ -122,10 +175,13 @@ export default function Form(props) {
                                       onDragOver = {event => {
                                         event.stopPropagation()
                                         event.preventDefault()
+                                        event.dataTransfer.effectAllowed= 'copyMove';
+                                        event.dataTransfer.dropEffect = "move";
                                       }}
                                       onDragEnter = {event => {
-                                        // event.stopPropagation()
-                                        // event.preventDefault()
+                                        event.stopPropagation()
+                                        event.preventDefault()
+                                        event.dataTransfer.effectAllowed= 'copyMove';
                                         event.dataTransfer.dropEffect = "move";
                                       }}
                                       onDrop={event => props.onDrop(event)}
@@ -195,7 +251,8 @@ export default function Form(props) {
 
                     <button
                         type="button"
-                        className="w-1/3 rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={() => exportAsImage(props.exportRef.current, props.msgSubmit)}
+                        className="w-2/5 rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Download
                     </button>
@@ -218,6 +275,7 @@ export default function Form(props) {
                   />
                     <button
                         type="button"
+                        onClick={(event) => sendEmail(event, exportRef.current)}
                         className="rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Send
