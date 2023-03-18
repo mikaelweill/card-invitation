@@ -3,7 +3,9 @@ export default function Menu(props) {
 
     const googleFonts = (props.googleFont.items.map(font => {
         return (
-        <option  className='text-gray-700 block px-4 py-2 text-sm'>
+        <option  
+        className='text-gray-700 block px-4 py-2 text-sm'
+        key = {font.family}>
             {font.family}
         </option>
 
