@@ -66,6 +66,10 @@ export default function Form(props) {
     }
 
     const canvas = await html2canvas(element)
+  //   html2canvas(element, {scrollY: -window.scrollY}).then(function(canvas) {
+  //     var img = canvas.toDataURL();
+  //     window.open(img);
+  // });
     const image = canvas.toDataURL("image/png", 1.0)
 
     downloadImage(image, imageFileName)
