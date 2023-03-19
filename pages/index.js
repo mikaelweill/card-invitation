@@ -61,7 +61,7 @@ function onDrop(event) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="m-5">
+      <main className="mt-5 mb-5 ml-12 mr-12">
         <Header />
         <div className = "flex justify-between">
           <div className = "w-2/5">
